@@ -2,18 +2,16 @@ import os
 import sys
 import time
 
-# ==============================================================================
-# --- TRAVA DE SEGURANÇA: CORREÇÃO DE DIRETÓRIO DE TRABALHO (CWD) ---
-# ==============================================================================
+
 diretorio_script = os.path.dirname(os.path.abspath(__file__))
-# Aguarda até 30 segundos caso a rede do WSL esteja instável no boot do PC
+
 for _ in range(30):
     if os.path.exists(diretorio_script):
         break
     time.sleep(1)
 
 os.chdir(diretorio_script)
-# ==============================================================================
+
 
 import tkinter as tk
 from tkinter import ttk
@@ -23,12 +21,12 @@ import pyperclip
 import pyautogui   
 from config_manager import load_config, save_config  
 
-# Variáveis globais de estado interno
+
 ARQUIVOS_COMPLETOS = []
 ARQUIVOS_VISUAIS = []
 ORDEM_SELECAO = []
 
-# Componentes da interface gráfica
+
 root = None
 entry_pesquisa = None
 listbox_arquivos = None
@@ -221,7 +219,6 @@ def configurar_interface():
     listbox_arquivos.bind("<space>", lambda event: alternar_selecao_customizada(event))
     root.bind("<Return>", lambda event: confirmar_e_copiar(event))
 
-    # AQUI ESTÁ A LINHA CORRIGIDA SEM NENHUM CARACTERE VAZADO:
     root.protocol("WM_DELETE_WINDOW", lambda: root.withdraw())
 
     ARQUIVOS_COMPLETOS = listar_arquivos_reais()

@@ -28,12 +28,12 @@ def save_config(directory_path):
 if __name__ == "__main__":
     print("--- Testando Mecanismo de Persistência (Tarefa 1.2) ---")
     
-    # Simulando a captura do caminho atual do seu projeto no WSL
+    
     caminho_teste = r"\\wsl.localhost\Ubuntu\home\pedro\projetos\meu_projeto_estruturado"
     
     # Executando a escrita
     save_config(caminho_teste)
     
-    # Executando a leitura para validação
+    
     configuracao_carregada = load_config()
     print(f"[VALIDAÇÃO] Lido do JSON: {configuracao_carregada.get('default_directory')}")
