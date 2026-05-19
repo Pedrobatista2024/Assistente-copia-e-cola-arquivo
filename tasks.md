@@ -1,19 +1,20 @@
 # Lista de Tarefas (tasks.md) - Assistente de Injeção de Código
 
-## [ ] Fase 1: Configuração e Infraestrutura Inicial
-* **Tarefa 1.1:** Inicializar o ambiente Python no lado do Windows e instalar as dependências de automação (`keyboard`, `pynput`, `pyautogui`).
-* **Tarefa 1.2:** Criar o mecanismo de leitura e escrita do arquivo `config.json` para persistir o caminho do diretório selecionado pelo usuário.
+## [X] Fase 1: Configuração e Infraestrutura Inicial
+* **Tarefa 1.1:** Inicializar o ambiente Python no lado do Windows e instalar as dependências de automação (`keyboard`, `pyautogui`, `pyperclip`).
+* **Tarefa 1.2:** Desenvolver o módulo isolado de persistência de dados `config_manager.py` com funções de leitura e escrita síncronas do arquivo `config.json`.
 
-## [ ] Fase 2: Captura de Eventos e Interface Gráfica (GUI)
-* **Tarefa 2.1:** Construir o listener em segundo plano para capturar o atalho global de teclado `Ctrl + Shift + I`.
-* **Tarefa 2.2:** Desenvolver a interface visual da "lupa de pesquisa" usando a biblioteca gráfica escolhida.
-* **Tarefa 2.3:** Implementar o componente de árvore de arquivos (estilo VS Code) capaz de mapear o diretório salvo (incluindo o suporte para ler caminhos do WSL `\\wsl.localhost\Ubuntu\...`).
+## [X] Fase 2: Captura de Eventos e Interface Gráfica (GUI)
+* **Tarefa 2.1:** Construir o listener global em segundo plano monitorando a combinação estável `Ctrl + Shift + Alt + I`.
+* **Tarefa 2.2:** Desenvolver a interface visual da "lupa de pesquisa" com design Dark Mode usando frames estruturados no Tkinter.
+* **Tarefa 2.3:** Criar a função híbrida de mapeamento portátil de diretórios capaz de realizar fallbacks automáticos entre o Ubuntu (`\\wsl.localhost\Ubuntu`) e o disco local do Windows (`C:\`).
 
-## [ ] Fase 3: Regras de Negócio e Filtragem
-* **Tarefa 3.1:** Implementar o mecanismo de busca textual para filtrar os arquivos da árvore em tempo real pelo nome.
-* **Tarefa 3.2:** Desenvolver o sistema de seleção múltipla (caixas de seleção) para permitir marcar mais de um arquivo sequencialmente.
+## [X] Fase 3: Regras de Negócio e Filtragem
+* **Tarefa 3.1:** Desenvolver o algoritmo de busca em tempo real com gatilhos de evento `<KeyRelease>` atrelados à caixa de entrada da lupa.
+* **Tarefa 3.2:** Implementar o sistema de seleção customizada via tecla `Espaço`, gerenciando a matriz global `ORDEM_SELECAO` e renderizando os índices dinâmicos de prioridade na tela.
+* **Tarefa 3.3:** Adicionar a interceptação de fechamento da janela gráfica no protocolo `WM_DELETE_WINDOW` para redirecionar o clique do X vermelho para a função oculta `withdraw`.
 
-## [ ] Fase 4: Leitura e Injeção de Contexto
-* **Tarefa 4.1:** Criar a função de leitura de arquivos textuais com tratamento de erro básico para arquivos binários ou excessivamente grandes.
-* **Tarefa 4.2:** Implementar a formatação de saída que envelopa o conteúdo de cada arquivo selecionado em blocos Markdown contendo a identificação do caminho relativo.
-* **Tarefa 4.3:** Construir a rotina de automação para ocultar a interface, devolver o foco para a janela anterior do sistema e injetar/digitar o texto formatado diretamente no campo ativo.
+## [X] Fase 4: Leitura, Injeção e Inicialização Oculta no Boot
+* **Tarefa 4.1:** Desenvolver o extrator textual de arquivos com proteção contra falhas e envelopamento customizado em blocos Markdown.
+* **Tarefa 4.2:** Integrar a rotina de injeção automática combinando a limpeza de tela, cópia de clipboard e disparo de hotkey de hardware (`Ctrl + V`).
+* **Tarefa 4.3:** Escrever o script inicializador silencioso em VBScript blindado com travas de loop de 90 segundos e ignoranciamento de erros de montagem de rede no boot do Windows.

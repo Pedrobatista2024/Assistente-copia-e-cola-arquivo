@@ -1,15 +1,16 @@
 # Plano Técnico (plan.md) - Assistente de Injeção de Código
 
-## 1. Stack de Tecnologia Proposta
-* **Linguagem Principal:** Python 3.12 (Executado no lado do Windows para ter acesso total às APIs de interface gráfica e simulação de teclado).
-* **Interface Gráfica (GUI):** `Tkinter` (nativo, leve e abre instantaneamente) ou `PyQt`/`CustomTkinter` para uma estética moderna estilo "lupa de pesquisa".
-* **Captura de Atalhos Globais:** Biblioteca `keyboard` ou `pynput` para escutar o comando `Ctrl + Shift + I` em segundo plano no Windows.
-* **Automação de Injeção de Texto:** Biblioteca `pyautogui` ou `keyboard` para simular a digitação rápida, ou manipulação da Área de Transferência combinada com um comando de colagem automático (`Ctrl + V`).
-* **Persistência de Dados:** Arquivo de configuração simples em formato JSON (`config.json`) para salvar o caminho do diretório padrão do usuário.
+## 1. Stack de Tecnologia Consolidada
+* **Ambiente de Execução:** Python 3.12+ executado diretamente no interpretador do Windows.
+* **Interface Gráfica (GUI):** Biblioteca nativa `Tkinter` customizada com paleta de cores escura (estilo VS Code / Dark Mode).
+* **Componentes Gráficos Usados:** `Entry` para a lupa de pesquisa, `Listbox` com `Scrollbar` acoplada para renderização textual rápida dos caminhos relativos e `Button` para ações em mouse.
+* **Monitoramento Global de Teclado:** Biblioteca `keyboard` acoplada diretamente ao nível de eventos do kernel do Windows para escutar a hotkey `Ctrl + Shift + Alt + I`.
+* **Mecanismo de Injeção de UI:** Combinação híbrida entre as bibliotecas `pyperclip` (para transferência segura do bloco Markdown de texto para a memória coletiva da Área de Transferência) e `pyautogui` (para disparar o comando assíncrono de hardware `ctrl + v` com delay de segurança de 0.2s).
+* **Persistência I/O:** Módulo nativo `json` gerenciando o estado no arquivo `config.json`.
 
-## 2. Arquitetura do Fluxo de Dados
-1. O script inicia em segundo plano (background) no Windows e lê o arquivo `config.json`.
-2. Quando o atalho `Ctrl + Shift + I` é acionado, o script identifica qual janela/campo de texto estava ativo e abre a interface gráfica.
-3. A interface lê a árvore de diretórios do projeto (seja um caminho local do Windows ou o caminho de rede do WSL `\\wsl.localhost\Ubuntu\...`).
-4. O usuário digita o filtro na barra de pesquisa, seleciona os arquivos desejados na árvore estruturada e clica em "Confirmar".
-5. O programa lê o conteúdo textual dos arquivos selecionados, fecha a interface gráfica, devolve o foco para a janela anterior e injeta o texto formatado em blocos Markdown.
+## 2. Arquitetura do Fluxo de Dados e Inicialização
+1. No boot do Windows, a pasta Inicializar dispara o arquivo `iniciar_assistente.vbs`.
+2. O script VBScript executa uma rotina protegida por `On Error Resume Next`. Ele roda um loop de até 90 repetições com intervalo de 1000ms testando a existência do arquivo Python através do comando puro `.ProviderPath` do PowerShell (garantindo que o caminho comece limpo em `\\wsl.localhost\`).
+3. Assim que a rede do WSL monta o volume, o Python é chamado em modo oculto (`0, False`).
+4. O programa executa um ciclo rápido de aquecimento visual (`executar_warmup`) para renderizar e ocultar a janela, deixando a interface pré-carregada na memória RAM.
+5. Quando o atalho é acionado, a janela acorda via `deiconify`, traz o foco para si (`focus_force`), limpa os filtros anteriores e renderiza a Listbox puxando os arquivos usando o método de varredura `os.walk`.
