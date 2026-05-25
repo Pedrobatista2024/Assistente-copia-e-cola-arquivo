@@ -44,8 +44,9 @@ def listar_arquivos_reais(diretorio_custom=None):
     
     lista_arquivos = []
     for raiz, pastas, arquivos in os.walk(diretorio):
-        if "__pycache__" in raiz or ".git" in raiz:
-            continue
+        # 🟢 TRAVA MÁGICA: Corta na raiz o acesso a pastas gigantescas de dependências e build
+        pastas[:] = [p for p in pastas if p not in ["node_modules", ".venv", "env", ".git", "__pycache__", "build", "android", "ios"]]
+        
         for arquivo in arquivos:
             caminho_completo = os.path.join(raiz, arquivo)
             caminho_relativo = os.path.relpath(caminho_completo, diretorio)
